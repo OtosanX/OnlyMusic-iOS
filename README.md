@@ -1,3 +1,14 @@
+# OnlyMusic for iPhone
+
+Personal iOS 18+ adaptation of [BitChord for Apple](https://github.com/bagumamartin/BitChord), licensed under GPL-3.0. OnlyMusic adds its own name and play/music icon, quiet playback defaults, and app-process audio intents for the widget. Upstream licenses and credits are preserved.
+
+Builds run through **Actions → Build OnlyMusic iPhone** and produce an unsigned `OnlyMusic.ipa` to sign with your own Apple ID. See [the setup notes](ONLYMUSIC-IPHONE-START-HERE.txt). This is an experimental adaptation; installing and testing on an iPhone is a separate step. Android's local database and custom recent-mix widget are not imported.
+
+The [first public test build passed](https://github.com/OtosanX/OnlyMusic-iOS/actions/runs/42160542218), including the iOS archive and package checks. Live playback on an iPhone still needs testing. Future builds are manual-only.
+
+The upstream documentation below describes BitChord and its downloads. Use this repository's Actions artifacts for OnlyMusic builds.
+
+---
 <div align="center">
 
 <img src="artwork/readme/icon.png" alt="BitChord app icon" width="112" height="112">

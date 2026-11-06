@@ -1,8 +1,6 @@
 name: Build OnlyMusic iPhone
 on:
   workflow_dispatch:
-  push:
-    branches: [codex/iphone-port]
 permissions:
   contents: read
 concurrency:
