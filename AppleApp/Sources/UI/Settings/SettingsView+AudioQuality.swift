@@ -66,7 +66,7 @@ extension SettingsView {
                 glyph: .sharedFolder,
                 title: "Export Compatible Downloads",
                 subtitle: exportDownloads
-                    ? "Music/BitChord — visible to other music apps"
+                    ? "Music/OnlyMusic — visible to other music apps"
                     : "Keeps downloads where other music apps can see them",
                 isOn: $exportDownloads
             )

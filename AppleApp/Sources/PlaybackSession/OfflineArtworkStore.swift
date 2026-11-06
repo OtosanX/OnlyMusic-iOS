@@ -17,8 +17,8 @@ actor OfflineArtworkStore {
     init(audioDirectories: [URL]? = nil, imageDirectory: URL? = nil) {
         let files = FileManager.default
         self.audioDirectories = audioDirectories ?? [
-            files.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("BitChord/audio"),
-            files.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("BitChord/Downloads/audio")
+            files.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("OnlyMusic/audio"),
+            files.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("OnlyMusic/Downloads/audio")
         ]
         self.imageDirectory = imageDirectory ?? DiskCache.cachesSubfolder("images")
     }

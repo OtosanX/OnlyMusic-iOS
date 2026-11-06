@@ -1,0 +1,50 @@
+name: Build OnlyMusic iPhone
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: onlymusic-ios-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  iphone:
+    runs-on: xcode-27
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install build tools
+        run: |
+          brew install xcodegen cmake
+          if ! command -v rustup >/dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o "$RUNNER_TEMP/rustup.sh"
+            sh "$RUNNER_TEMP/rustup.sh" -y --profile minimal
+          fi
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Set up Rust Apple targets
+        run: |
+          rustup default stable
+          rustup target add aarch64-apple-darwin aarch64-apple-ios
+      - name: Test and build iPhone IPA
+        run: |
+          set -o pipefail
+          bash scripts/build-onlymusic-ios.sh 2>&1 | tee onlymusic-ios-build.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OnlyMusic-iPhone-iOS18
+          path: |
+            build/OnlyMusic.ipa
+            build/OnlyMusic.ipa.sha256
+          if-no-files-found: error
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: OnlyMusic-build-diagnostics
+          path: onlymusic-ios-build.log
+          retention-days: 1

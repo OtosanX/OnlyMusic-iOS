@@ -110,7 +110,7 @@ extension PlaybackController {
                 // The native command discards this result if the source changed.
                 try engine.setLoudnessMeasurement(source: path, measurement: measurement)
             } catch is CancellationError { }
-            catch { NSLog("[BitChord] loudness measurement unavailable: \(error)") }
+            catch { NSLog("[OnlyMusic] loudness measurement unavailable: \(error)") }
         }
     }
 

@@ -1,0 +1,27 @@
+OnlyMusic for iPhone - iOS 18 and newer
+
+Native iPhone adaptation of BitChord for Apple, with OnlyMusic branding,
+quiet first-launch defaults and app-process widget audio intents.
+
+Upstream: https://github.com/bagumamartin/BitChord
+Base revision: 898d8ed746b1bfdeb26a4c2d24484844241ed990
+License: GPL-3.0; upstream and third-party notices are retained.
+
+Build: Actions -> Build OnlyMusic iPhone -> Run workflow.
+The manual workflow builds on a standard GitHub-hosted macOS runner and
+uploads an unsigned OnlyMusic.ipa. It does not publish releases or use Apple
+credentials. Download the artifact and sign/install with your own Apple ID.
+Windows installation guide:
+https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows
+
+The deployment floor is iOS 18; the source currently needs an iOS 27 SDK.
+The newer SDK does not change the minimum iOS version of the packaged app.
+
+This is an early adaptation, not a verified release. Native screens differ
+from Android OnlyMusic. Android databases and recent mix snapshots are not
+imported. Sign in again for your online YouTube Music account.
+The widget uses the Apple base's now-playing view, not Android's custom
+recent-mix layout. Widget artwork and titles require an App Group supported
+by your signing setup; without it a generic playback button is shown.
+Google sign-in still uses Google's webpage, not another app's saved account.
+Live streaming, login and background audio must be checked on an iPhone.

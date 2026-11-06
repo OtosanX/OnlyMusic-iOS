@@ -92,7 +92,7 @@ final class ListeningStore {
     /// that lands while another is queued replaces it rather than joining a
     /// queue. State below is main-thread only; the writer hops back to clear it.
     private let persistQueue = DispatchQueue(
-        label: "app.bitchord.BitChord.listening-persist",
+        label: "com.caleb.onlymusic.listening-persist",
         qos: .utility
     )
     /// Fastest the store will rewrite the disk while a track is playing. The
@@ -876,7 +876,7 @@ final class ListeningStore {
         #endif
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
-        return root.appendingPathComponent("BitChord/listening", isDirectory: true)
+        return root.appendingPathComponent("OnlyMusic/listening", isDirectory: true)
     }
 
     nonisolated static func monthKey(_ date: Date = Date()) -> String {

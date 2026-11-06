@@ -74,7 +74,7 @@ actor VideoVersionAlignment {
 
     private let directory: URL = {
         let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        let url = caches.appendingPathComponent("BitChord/VersionAlignment", isDirectory: true)
+        let url = caches.appendingPathComponent("OnlyMusic/VersionAlignment", isDirectory: true)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
     }()

@@ -17,7 +17,10 @@ import Foundation
 /// performed during launch, before the first window has been made.
 @MainActor
 final class AppServices {
-    static let shared = AppServices()
+    static let shared: AppServices = {
+        OnlyMusicDefaults.register()
+        return AppServices()
+    }()
 
     let controller = PlaybackController()
     let appModel = AppModel()
@@ -55,13 +58,13 @@ enum BitChordIntentError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .emptyQuery:
-            "What should BitChord look for?"
+            "What should OnlyMusic look for?"
         case .nothingPlaying:
-            "Nothing is playing in BitChord."
+            "Nothing is playing in OnlyMusic."
         case .signedOut:
-            "Sign in to BitChord to like songs."
+            "Sign in to OnlyMusic to like songs."
         case .noResults(let query):
-            "BitChord couldn't find a song for “\(query)”."
+            "OnlyMusic couldn't find a song for “\(query)”."
         case .refused(let message):
             message
         }
@@ -218,7 +221,7 @@ enum AppIntentActions {
     }
 
     /// Open Search with the term already in the field — the same request shape a
-    /// `bitchord://search` link makes, so both roads end in the same place.
+    /// `onlymusic://search` link makes, so both roads end in the same place.
     static func search(query: String) throws -> String {
         let term = try cleaned(query)
         let appModel = AppServices.shared.appModel
@@ -284,7 +287,7 @@ enum AppIntentActions {
 /// "pause" is not asking for a window.
 struct PlayPauseIntent: AppIntent {
     static var title: LocalizedStringResource = "Play or Pause"
-    static var description = IntentDescription("Play or pause what BitChord is playing.")
+    static var description = IntentDescription("Play or pause what OnlyMusic is playing.")
     static var openAppWhenRun = false
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -298,7 +301,7 @@ struct PlayPauseIntent: AppIntent {
 /// stream wiring settles behind the first window.
 struct PlaySongIntent: AppIntent {
     static var title: LocalizedStringResource = "Play a Song"
-    static var description = IntentDescription("Search BitChord for a song and start playing it.")
+    static var description = IntentDescription("Search OnlyMusic for a song and start playing it.")
     static var openAppWhenRun = true
 
     @Parameter(title: "Song", requestValueDialog: "Which song?")
@@ -312,7 +315,7 @@ struct PlaySongIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let title = try await AppIntentActions.play(song: song)
-        return .result(dialog: "Playing \(title) in BitChord")
+        return .result(dialog: "Playing \(title) in OnlyMusic")
     }
 }
 
@@ -320,10 +323,10 @@ struct PlaySongIntent: AppIntent {
 /// result is the screen.
 struct SearchIntent: AppIntent {
     static var title: LocalizedStringResource = "Search"
-    static var description = IntentDescription("Open BitChord's search with a query.")
+    static var description = IntentDescription("Open OnlyMusic's search with a query.")
     static var openAppWhenRun = true
 
-    @Parameter(title: "Search For", requestValueDialog: "What should BitChord search for?")
+    @Parameter(title: "Search For", requestValueDialog: "What should OnlyMusic search for?")
     var query: String
 
     init() {}
@@ -338,7 +341,7 @@ struct SearchIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let term = try await AppIntentActions.search(query: query)
-        return .result(dialog: "Searching BitChord for \(term)")
+        return .result(dialog: "Searching OnlyMusic for \(term)")
     }
 }
 
@@ -347,7 +350,7 @@ struct SearchIntent: AppIntent {
 /// already alive in the audio session.
 struct LikeCurrentSongIntent: AppIntent {
     static var title: LocalizedStringResource = "Like the Current Song"
-    static var description = IntentDescription("Like or unlike what is playing in BitChord.")
+    static var description = IntentDescription("Like or unlike what is playing in OnlyMusic.")
     static var openAppWhenRun = false
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -359,7 +362,7 @@ struct LikeCurrentSongIntent: AppIntent {
 /// Add a song by name to the end of the queue.
 struct AddToQueueIntent: AppIntent {
     static var title: LocalizedStringResource = "Add to the Queue"
-    static var description = IntentDescription("Find a song and add it to the end of BitChord's queue.")
+    static var description = IntentDescription("Find a song and add it to the end of OnlyMusic's queue.")
     static var openAppWhenRun = true
 
     @Parameter(title: "Song", requestValueDialog: "Which song?")

@@ -7,6 +7,7 @@ import UIKit
 #endif
 import MediaPlayer
 import BitChordShared
+import WidgetKit
 #if os(iOS)
 import NowPlaying
 import AVFoundation
@@ -350,7 +351,7 @@ private final class ModernNowPlaying: MediaSessionRepresentable {
         foreground: { UIApplication.shared.applicationState != .background },
         log: { message in
             PlaybackDebugLog.shared.record(message)
-            NSLog("[BitChord] %@", message)
+            NSLog("[OnlyMusic] %@", message)
         }
     )
 
@@ -442,7 +443,7 @@ private final class ModernNowPlaying: MediaSessionRepresentable {
         let message = "Now Playing \(event) session=\(id) content=\(contentID ?? "none") "
             + "rate=\(rate) preparing=\(preparing) appState=\(UIApplication.shared.applicationState.rawValue)"
         PlaybackDebugLog.shared.record(message)
-        NSLog("[BitChord] %@", message)
+        NSLog("[OnlyMusic] %@", message)
     }
 
     func prepare(id: String, title: String, artist: String, duration: Double,
@@ -602,7 +603,7 @@ private final class ModernNowPlayingSession: NowPlayingSessionDriver {
                 let message = "Now Playing status session=\(self.session.id) eligible=\(eligible) "
                     + "applicationPrimary=\(applicationPrimary) systemPrimary=\(self.isSystemPrimary)"
                 PlaybackDebugLog.shared.record(message)
-                NSLog("[BitChord] %@", message)
+                NSLog("[OnlyMusic] %@", message)
                 // A superseded uncancellable request can steal application
                 // primary from the new session. Recover on that status edge;
                 // system prominence changes alone never trigger takeover.
@@ -628,7 +629,7 @@ private final class ModernNowPlayingSession: NowPlayingSessionDriver {
 final class WidgetStatePublisher {
     func publish(entry: QueueEntry?, isPlaying: Bool, canNext: Bool, canPrevious: Bool) {
         guard let entry else { return }
-        let group = "group.app.bitchord.BitChord"
+        let group = "group.com.caleb.onlymusic"
         // Unprovisioned App Groups hang cfprefsd on write — skip when the
         // container is missing rather than compiling DEBUG out entirely.
         guard FileManager.default.containerURL(
@@ -653,12 +654,13 @@ final class WidgetStatePublisher {
             } else {
                 defaults.removeObject(forKey: "widget.artworkPath")
             }
+            WidgetCenter.shared.reloadTimelines(ofKind: "BitChordMediaWidget")
         }
     }
 
     nonisolated private static func artworkFileURL() -> URL? {
         guard let container = FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: "group.app.bitchord.BitChord"
+            forSecurityApplicationGroupIdentifier: "group.com.caleb.onlymusic"
         ) else { return nil }
         return container.appendingPathComponent("widget-artwork.jpg")
     }

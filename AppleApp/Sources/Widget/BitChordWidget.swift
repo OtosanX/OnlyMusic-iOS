@@ -9,7 +9,10 @@ import AppIntents
 // WidgetStatePublisher. The extension never links native-core and never
 // touches the network. Tapping opens the player (deep link §9).
 
-private let groupDefaults = UserDefaults(suiteName: "group.app.bitchord.BitChord")
+private let groupDefaults: UserDefaults? = {
+    guard FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.caleb.onlymusic") != nil else { return nil }
+    return UserDefaults(suiteName: "group.com.caleb.onlymusic")
+}()
 
 struct MediaWidgetEntry: TimelineEntry {
     let date: Date
@@ -24,7 +27,7 @@ struct MediaWidgetEntry: TimelineEntry {
     /// Upstream's last-played fallback: the widget is never blank after a
     /// first play, so an empty snapshot renders the placeholder, not nothing.
     static let empty = MediaWidgetEntry(
-        date: .now, title: "BitChord", artist: "Nothing queued",
+        date: .now, title: "OnlyMusic", artist: "Nothing queued",
         playing: false, canNext: false, canPrevious: false,
         artwork: nil, hasSession: false
     )
@@ -66,7 +69,7 @@ struct MediaWidgetView: View {
 
     var body: some View {
         content
-            .widgetURL(URL(string: "bitchord://open-player"))
+            .widgetURL(URL(string: "onlymusic://open-player"))
             .containerBackground(.fill.tertiary, for: .widget)
     }
 
@@ -81,11 +84,11 @@ struct MediaWidgetView: View {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(entry.title)
                             .font(.callout.weight(.semibold))
-                            .lineLimit(1)
+                            .lineLimit(2)
                         Text(entry.artist)
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                            .lineLimit(1)
+                            .lineLimit(2)
                         HStack(spacing: 6) {
                             Image(systemName: entry.playing ? "pause.fill" : "play.fill")
                                 .font(.system(size: 10, weight: .bold))
@@ -112,6 +115,7 @@ struct MediaWidgetView: View {
                         Spacer(minLength: 0)
                     }
                     .font(.title3)
+                    .buttonStyle(.bordered)
                     .tint(.primary)
                 }
             }
@@ -120,8 +124,13 @@ struct MediaWidgetView: View {
             VStack(spacing: 6) {
                 Image(systemName: "music.note")
                     .foregroundStyle(.secondary)
-                Text("BitChord")
+                Text("OnlyMusic")
                     .font(.callout.weight(.semibold))
+                Button(intent: WidgetTransportIntent(command: "toggle")) {
+                    Label("Play or pause", systemImage: "playpause.fill")
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Play or pause OnlyMusic")
             }
         }
     }
@@ -145,7 +154,6 @@ struct MediaWidgetView: View {
         }
     }
 }
-
 #if os(macOS)
 private func platformImage(_ data: Data) -> NSImage? { NSImage(data: data) }
 private extension Image {
@@ -163,7 +171,7 @@ struct BitChordMediaWidget: Widget {
         StaticConfiguration(kind: "BitChordMediaWidget", provider: MediaWidgetProvider()) { entry in
             MediaWidgetView(entry: entry)
         }
-        .configurationDisplayName("BitChord")
+        .configurationDisplayName("OnlyMusic")
         .description("Now-playing state, transport controls, and a tap back into the player.")
         // systemSmall ~= upstream square, systemMedium ~= upstream wide (spec §9).
         .supportedFamilies([.systemSmall, .systemMedium])
@@ -174,21 +182,5 @@ struct BitChordMediaWidget: Widget {
 struct BitChordWidgetBundle: WidgetBundle {
     var body: some Widget {
         BitChordMediaWidget()
-    }
-}
-
-struct WidgetTransportIntent: AppIntent {
-    static var title: LocalizedStringResource = "BitChord Transport"
-    static var isDiscoverable = false
-
-    @Parameter(title: "Command")
-    var command: String
-
-    init() { command = "toggle" }
-    init(command: String) { self.command = command }
-
-    func perform() async throws -> some IntentResult {
-        UserDefaults(suiteName: "group.app.bitchord.BitChord")?.set(command, forKey: "widget.command")
-        return .result()
     }
 }

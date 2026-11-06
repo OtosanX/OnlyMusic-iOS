@@ -212,7 +212,7 @@ extension PlaybackController {
                             sessionChannels: sessionFormat?.channels
                         )
                     } catch {
-                        NSLog("[BitChord] track output preparation failed; continuing with current output: \(error)")
+                        NSLog("[OnlyMusic] track output preparation failed; continuing with current output: \(error)")
                     }
                     guard loadSubmissionGate.isCurrent(generation) else { return nil as TrackInfoRec? }
                     return try engine.loadTrackPaused(request: loadRequest)

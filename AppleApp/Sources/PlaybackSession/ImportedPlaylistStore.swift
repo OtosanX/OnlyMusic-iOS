@@ -47,7 +47,7 @@ final class ImportedPlaylistStore {
 
     private init() {
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("BitChord", isDirectory: true)
+            .appendingPathComponent("OnlyMusic", isDirectory: true)
         fileURL = support.appendingPathComponent("imported-playlists.json")
         load()
     }

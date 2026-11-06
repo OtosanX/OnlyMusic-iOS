@@ -541,7 +541,7 @@ enum DiskCache {
     }
     static func cachesSubfolder(_ name: String) -> URL {
         let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("BitChord/\(name)", isDirectory: true)
+            .appendingPathComponent("OnlyMusic/\(name)", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         if name == "audio" { allowLockedPlayback(dir) }
         return dir

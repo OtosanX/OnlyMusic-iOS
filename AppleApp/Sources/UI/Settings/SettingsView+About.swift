@@ -123,7 +123,7 @@ extension SettingsView {
             SettingsToggleLine(
                 glyph: .video,
                 title: "Stop When Backgrounded",
-                subtitle: "Pauses playback when BitChord is hidden or deactivated on Mac; closing a window uses its own setting",
+                subtitle: "Pauses playback when OnlyMusic is hidden or deactivated on Mac; closing a window uses its own setting",
                 isOn: $stopBackground
             )
         }
@@ -214,7 +214,7 @@ extension SettingsView {
         }
         buildUpdateRows(&rows)
         rows.row("GitHub", "github", "source", "code", "repository") {
-            Link("GitHub", destination: URL(string: "https://github.com/bagumamartin/BitChord")!)
+            Link("Upstream source (BitChord)", destination: URL(string: "https://github.com/bagumamartin/BitChord")!)
         }
         rows.row("Developer", "developer", "author", "github") {
             Link("Developer", destination: URL(string: "https://github.com/bagumamartin")!)

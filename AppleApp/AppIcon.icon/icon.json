@@ -1,30 +1,21 @@
 {
-  "fill" : {
-    "linear-gradient" : [
-      "srgb:0.98431,0.36078,0.45490,1.00000",
-      "srgb:0.98039,0.13725,0.23137,1.00000"
+  "fill": {
+    "linear-gradient": [
+      "srgb:0.06275,0.07451,0.10196,1.00000",
+      "srgb:0.06275,0.07451,0.10196,1.00000"
     ]
   },
-  "groups" : [
+  "groups": [
     {
-      "layers" : [
+      "layers": [
         {
-          "glass" : true,
-          "image-name" : "waves.svg",
-          "name" : "waves"
+          "image-name": "onlymusic.svg",
+          "name": "OnlyMusic"
         }
-      ],
-      "shadow" : {
-        "kind" : "neutral",
-        "opacity" : 0.5
-      },
-      "translucency" : {
-        "enabled" : true,
-        "value" : 0.4
-      }
+      ]
     }
   ],
-  "supported-platforms" : {
-    "squares" : "shared"
+  "supported-platforms": {
+    "squares": "shared"
   }
 }

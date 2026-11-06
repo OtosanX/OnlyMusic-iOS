@@ -24,7 +24,7 @@ import SwiftUI
 enum Theme {
     /// The app's tint. Matches the artwork-derived accent the player uses, so
     /// chrome and content agree rather than fighting.
-    static let accent = Color.accentColor
+    static let accent = Color(red: 1, green: 0.141, blue: 0.286)
 
     // MARK: - Metrics
 

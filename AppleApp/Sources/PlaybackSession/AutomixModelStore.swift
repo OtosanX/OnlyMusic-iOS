@@ -225,7 +225,7 @@ final class AutomixModelStore {
     static var defaultDirectory: URL {
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
-        return root.appendingPathComponent("BitChord/Models", isDirectory: true)
+        return root.appendingPathComponent("OnlyMusic/Models", isDirectory: true)
     }
 
     /// One session per transfer, because a `URLSessionDataTask` takes its delegate

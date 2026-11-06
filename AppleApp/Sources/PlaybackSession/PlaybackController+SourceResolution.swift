@@ -76,7 +76,7 @@ extension PlaybackController {
         @MainActor
         static func current() -> ResolvePrefs {
             let streamQuality = AppSettings.shared.effectiveAudioQuality(metered: NetworkQuality.shared.metered).name
-            NSLog("[BitChord] playback quality requested=\(streamQuality) network=\(NetworkQuality.shared.metered ? "metered" : "unmetered")")
+            NSLog("[OnlyMusic] playback quality requested=\(streamQuality) network=\(NetworkQuality.shared.metered ? "metered" : "unmetered")")
             return ResolvePrefs(
                 maxKbps: Int(NetworkQuality.shared.maxKbps),
                 wantLossless: streamQuality == "LOSSLESS",

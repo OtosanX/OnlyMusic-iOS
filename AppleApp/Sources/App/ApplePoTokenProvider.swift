@@ -60,7 +60,7 @@ final class ApplePoTokenProvider: NSObject, PlaybackTokenBridgeProvider, WKNavig
             let config = WKWebViewConfiguration()
             config.websiteDataStore = .nonPersistent()
             let rule = try await WKContentRuleListStore.default().compileContentRuleList(
-                forIdentifier: "BitChord-Playback-Verification-No-Network",
+                forIdentifier: "OnlyMusic-Playback-Verification-No-Network",
                 encodedContentRuleList: "[{\"trigger\":{\"url-filter\":\".*\"},\"action\":{\"type\":\"block\"}}]")
             if let rule { config.userContentController.add(rule) }
             let view = WKWebView(frame: .zero, configuration: config)

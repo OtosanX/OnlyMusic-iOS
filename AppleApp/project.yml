@@ -47,7 +47,7 @@ targets:
     supportedDestinations: [iOS, macOS]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.bitchord.BitChord
+        PRODUCT_BUNDLE_IDENTIFIER: com.caleb.onlymusic
         # The Mac executable lives in Contents/MacOS while embedded frameworks
         # live in Contents/Frameworks; the iOS default runpath omits this parent.
         LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]: "$(inherited) @executable_path/../Frameworks"
@@ -95,20 +95,21 @@ targets:
     info:
       path: BitChord-Info.plist
       properties:
-        CFBundleDisplayName: BitChord
+        CFBundleDisplayName: OnlyMusic
+        OnlyMusicPersonalBuild: true
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         BitChordRevision: "$(BITCHORD_BUILD_REVISION)"
         LSApplicationCategoryType: public.app-category.music
         SUFeedURL: https://raw.githubusercontent.com/bagumamartin/BitChord/main/appcast.xml
         SUPublicEDKey: ZoHTuKtTzesqdu6L5WyVZRkdP3v9gHJExOoM9nBEvjU=
-        SUEnableAutomaticChecks: true
+        SUEnableAutomaticChecks: false
         SUAutomaticallyUpdate: false
         SUVerifyUpdateBeforeExtraction: true
         SURequireSignedFeed: true
         CFBundleURLTypes:
-          - CFBundleURLName: app.bitchord.BitChord
-            CFBundleURLSchemes: [bitchord]
+          - CFBundleURLName: com.caleb.onlymusic
+            CFBundleURLSchemes: [onlymusic]
         # Handoff of playback: the activity type the payload is carried in. The
         # system only launches this app for an activity it has been told about,
         # so the type is declared here as well as written in
@@ -143,7 +144,7 @@ targets:
         com.apple.security.network.client: true
         com.apple.security.files.user-selected.read-write: true
         com.apple.security.application-groups:
-          - group.app.bitchord.BitChord
+          - group.com.caleb.onlymusic
         # iCloud key-value store: syncs the per-song lyrics provider choice (O1).
         com.apple.developer.ubiquity-kvstore-identifier: $(TeamIdentifierPrefix)$(CFBundleIdentifier)
   BitChordWidget:
@@ -151,13 +152,15 @@ targets:
     supportedDestinations: [iOS, macOS]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: app.bitchord.BitChord.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.caleb.onlymusic.widget
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) ONLYMUSIC_WIDGET"
     sources:
       - Sources/Widget
+      - Sources/Shared/OnlyMusicWidgetIntent.swift
     info:
       path: BitChordWidget-Info.plist
       properties:
-        CFBundleDisplayName: BitChord Widget
+        CFBundleDisplayName: OnlyMusic Widget
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         BitChordRevision: "$(BITCHORD_BUILD_REVISION)"
@@ -168,4 +171,4 @@ targets:
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.application-groups:
-          - group.app.bitchord.BitChord
+          - group.com.caleb.onlymusic

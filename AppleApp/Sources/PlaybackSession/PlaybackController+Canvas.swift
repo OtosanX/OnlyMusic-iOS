@@ -51,13 +51,13 @@ extension PlaybackController {
                 guard let json, let data = json.data(using: .utf8),
                       let payload = try? JSONDecoder().decode(CanvasPayload.self, from: data),
                       let url = URL(string: payload.url) else {
-                    NSLog("[BitChord] no animated artwork found for '%@' by '%@'", entry.title, entry.artist)
+                    NSLog("[OnlyMusic] no animated artwork found for '%@' by '%@'", entry.title, entry.artist)
                     return
                 }
                 self.canvasURL = url
                 self.canvasFallbackURL = payload.fallbackUrl.flatMap(URL.init(string:))
                 self.canvasSource = payload.source
-                NSLog("[BitChord] animated artwork source=%@ host=%@ for '%@'",
+                NSLog("[OnlyMusic] animated artwork source=%@ host=%@ for '%@'",
                       payload.source, url.host ?? "unknown", entry.title)
             }
         })
@@ -77,14 +77,14 @@ extension PlaybackController {
                               let data = json.data(using: .utf8),
                               let payload = try? JSONDecoder().decode(CanvasPayload.self, from: data),
                               let url = URL(string: payload.url) else {
-                            NSLog("[BitChord] no animated artwork found for '%@' by '%@' after album metadata arrived",
+                            NSLog("[OnlyMusic] no animated artwork found for '%@' by '%@' after album metadata arrived",
                                   latest.title, latest.artist)
                             return
                         }
                         self.canvasURL = url
                         self.canvasFallbackURL = payload.fallbackUrl.flatMap(URL.init(string:))
                         self.canvasSource = payload.source
-                        NSLog("[BitChord] animated artwork source=%@ host=%@ for '%@' after album metadata arrived",
+                        NSLog("[OnlyMusic] animated artwork source=%@ host=%@ for '%@' after album metadata arrived",
                               payload.source, url.host ?? "unknown", latest.title)
                     }
                 })

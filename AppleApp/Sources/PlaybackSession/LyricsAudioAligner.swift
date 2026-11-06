@@ -55,7 +55,7 @@ enum LyricsAudioAligner {
               recognizer.isAvailable,
               recognizer.supportsOnDeviceRecognition
         else {
-            NSLog("[BitChord] local lyric alignment unavailable for this language/device")
+            NSLog("[OnlyMusic] local lyric alignment unavailable for this language/device")
             return false
         }
 
@@ -119,7 +119,7 @@ enum LyricsAudioAligner {
                 } catch is CancellationError {
                     return alignedAtLeastOneLine
                 } catch {
-                    NSLog("[BitChord] local lyric recognition chunk at %.1fs failed: %@",
+                    NSLog("[OnlyMusic] local lyric recognition chunk at %.1fs failed: %@",
                           startSeconds, String(describing: error))
                 }
             }
