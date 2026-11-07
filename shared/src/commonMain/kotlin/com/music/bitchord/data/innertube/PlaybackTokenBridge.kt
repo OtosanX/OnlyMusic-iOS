@@ -60,7 +60,7 @@ object PlaybackTokenBridge {
                         // Upstream uses a cookie-free challenge client; bypass the provider jar.
                         header("Cookie", "")
                         header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.3")
-                        header("x-goog-api-key", "AIzaSyDyT5W0Jh49F30Pqqtyfdf7pDLFKLJoAnw")
+                        header("x-goog-api-key", "00000000000000000")
                         header("x-user-agent", "grpc-web-javascript/0.1")
                         setBody(buildJsonArray { add("O43z0dpjhgX20SCx4KAo"); botguardResponse?.let { add(it) } }.toString())
                     }.let { response ->
